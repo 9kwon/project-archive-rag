@@ -1,0 +1,24 @@
+name: project-archive-rag
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pip
+  - pip:
+      # ── 1단계: 문서 파싱 ──
+      - pymupdf        # PDF 텍스트·표 추출
+      - python-pptx    # PPTX (회의록)
+      - openpyxl       # XLSX (성과내역서)
+      - lxml           # HWPX(zip 내부 XML), HTML 파싱
+      - pyyaml         # config.yaml 로딩
+      - kiwipiepy      # 한국어 형태소 분석 (띄어쓰기 복원, BM25 토크나이저)
+      # ── 2단계: 임베딩·색인 (CUDA GPU 예시 — 환경에 맞게 조정) ──
+      # torch는 CUDA 빌드를 명시해야 한다. 버전을 고정하지 않으면
+      # PyPI의 CPU 빌드가 잡힌다(+cu126 suffix가 핵심).
+      - --extra-index-url https://download.pytorch.org/whl/cu126
+      - torch==2.13.0+cu126
+      - sentence-transformers   # bge-m3 로컬 임베딩
+      - chromadb                # 벡터 DB (폴더 하나로 백업 가능)
+      - rank-bm25               # 키워드 검색
+      # ── 4단계: 웹 UI ──
+      - streamlit

@@ -1,0 +1,99 @@
+# 검색 품질 평가 질문셋 — 템플릿
+#
+# 실제 과제에 적용할 때 이 파일을 과제의 질문·정답으로 채운다.
+# 아래 항목들은 형식을 보여주는 placeholder다 (그대로 돌리면 전부 미검출이 정상).
+#
+# 필드:
+#   id           질문 식별자
+#   type         fact(단순 사실) | metric(성과 수치) | compare(연차 비교) |
+#                source(기관 소관) | absent(자료에 없는 질문 — 환각 확인)
+#   question     실제로 던질 질문
+#   answer       사람이 확인한 정답 (채점 기준이 아니라 기록용)
+#   gold_docs    정답 근거가 실린 문서명 (부분일치)
+#   must_contain 정답 청크가 반드시 포함해야 하는 문자열 (비우면 gold_docs만 확인)
+#
+# type: absent 는 자료에 없는 질문이다. gold_docs가 비어 있고,
+# 생성 단계에서 "확인되지 않습니다"라고 답해야 통과한다.
+#
+# 작성 요령 (실제 운용에서 배운 것):
+# - 질문 유형을 고르게 섞을 것. 유형별로 실패 양상이 다르다
+#   (수치 질문은 표 오독, 소관 질문은 양식 문구 오염이 원인이었다).
+# - 정답 위치를 사람이 먼저 확인하고 gold_docs를 적을 것. 채점이 자동이려면
+#   정답 기준이 검색 대상과 같은 표기여야 한다.
+# - 자료에 없는 질문(absent)을 반드시 포함할 것 — 없는 것을 없다고
+#   답하는지가 근거 기반 시스템의 핵심 검증이다.
+
+# ── 단순 사실 검색 ──────────────────────────────────────────
+- id: q01
+  type: fact
+  question: 이 과제의 과제번호는 무엇인가
+  answer: RS-0000-XX000000            # placeholder
+  gold_docs: [성과내역서, 성과확인서, 연차보고서]
+  must_contain: ["RS-0000-XX000000"]
+
+- id: q02
+  type: fact
+  question: 주관연구개발기관과 공동연구개발기관은 각각 어디인가
+  answer: 주관 OO기업(주), 공동 OO연구원   # placeholder
+  gold_docs: [단계보고서, 연차보고서]
+  must_contain: ["OO기업"]
+
+- id: q03
+  type: fact
+  question: 4차년도 실증 실험에 참여한 인원은 몇 명인가
+  answer: NNN명                        # placeholder
+  gold_docs: [4차년도 연차보고서]
+  must_contain: ["NNN"]
+
+# ── 성과 수치 (정형 데이터 조회 대상) ───────────────────────
+- id: q04
+  type: metric
+  question: 4차년도 논문과 특허 성과는 각각 몇 건인가
+  answer: 논문 N편, 특허 N건            # placeholder
+  gold_docs: [연차보고서, 단계보고서]
+  must_contain: []
+
+- id: q05
+  type: metric
+  question: 핵심 지표 A의 연차별 목표와 실적은 어떻게 되나
+  answer: 1차 목표 ≥NN% … (지표 이력)   # placeholder
+  gold_docs: [연차보고서]
+  must_contain: ["핵심 지표 A"]
+
+# ── 연차 비교 ───────────────────────────────────────────────
+- id: q06
+  type: compare
+  question: 1단계와 2단계의 사업 기간은 각각 언제인가
+  answer: 1단계 YYYY~YYYY, 2단계 YYYY~YYYY   # placeholder
+  gold_docs: [단계보고서]
+  must_contain: []
+
+- id: q07
+  type: compare
+  question: 3차년도와 4차년도의 수행 내용은 어떻게 다른가
+  answer: (연차별 수행 내용 요약)        # placeholder
+  gold_docs: [3차년도 연차보고서, 4차년도 연차보고서]
+  must_contain: []
+
+# ── 기관 소관 ───────────────────────────────────────────────
+- id: q08
+  type: source
+  question: 핵심 지표 A는 어느 기관 담당인가
+  answer: OO연구원(공동연구개발기관)      # placeholder
+  gold_docs: [연차보고서]
+  must_contain: []
+
+# ── 자료에 없는 질문 (환각 확인) ────────────────────────────
+- id: q09
+  type: absent
+  question: 이 과제의 해외 특허 등록 실적을 알려달라
+  answer: 확인 불가 — 국제 출원·등록 실적은 자료에 없다 (예시)
+  gold_docs: []
+  must_contain: []
+
+- id: q10
+  type: absent
+  question: 실증 참여자들의 이름과 소속을 알려달라
+  answer: 확인 불가 — 개인정보로 자료에 없다
+  gold_docs: []
+  must_contain: []

@@ -1,0 +1,38 @@
+# ── 과제 데이터: 어떤 경우에도 git에 들어가면 안 됨 ──────────
+# 인제스트 소스 폴더는 저장소 밖에 두는 것을 권장한다.
+# 저장소 안에 둔다면 폴더명을 반드시 여기에 추가할 것.
+sources/
+docs_raw/
+storage/
+data/
+wiki/                    # 인수인계 위키 (과제 데이터 포함, src/wiki_build.py + 사람 검증)
+연차별_성과정리.md        # 실제 과제 수치가 담긴 산출물 (src/report_summary.py로 재생성)
+*차년도_보고서_초안.md    # 자동 생성 초안 (src/draft_report.py로 재생성)
+성과정리.xlsx             # src/export_excel.py로 재생성
+
+# ── 원본 문서 형식 (실수로 저장소에 들어오는 것 방지) ────────
+*.hwp
+*.hwpx
+*.pdf
+*.pptx
+*.xlsx
+*.docx
+
+# ── 로컬 설정 (실제 과제 정보·환경별 값) ────────────────────
+config.yaml
+
+# ── 도구 로컬 설정 ──────────────────────────────────────────
+.claude/
+
+# ── 재생성 가능한 산출물 ────────────────────────────────────
+*.sqlite
+*.faiss
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.streamlit_app.pid
+.streamlit_app.log
+
+# ── 비밀키 ──────────────────────────────────────────────────
+.env
+*.key

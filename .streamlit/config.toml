@@ -1,0 +1,12 @@
+# 파일 감시자를 끈다.
+# 켜두면 Streamlit이 transformers의 모든 하위 모듈을 훑으며 import를 시도하고,
+# torchvision 같은 미설치 패키지 때문에 수백 줄 경고가 쏟아지며 앱이 느려진다.
+# 코드를 고친 뒤에는 브라우저에서 R(재실행)을 누르거나 서버를 다시 띄우면 된다.
+[server]
+fileWatcherType = "none"
+
+[browser]
+gatherUsageStats = false
+
+[theme]
+base = "light"
